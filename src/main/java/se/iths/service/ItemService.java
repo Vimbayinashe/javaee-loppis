@@ -7,20 +7,18 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import java.util.List;
 
-@Transactional  //this is a class that comms with the database
+@Transactional  //this is a class that communicates with the database
 public class ItemService {
 
     @PersistenceContext
     EntityManager entityManager;    //sköter interaktion med databasen
 
-    public Item createItem(Item item) {     //item hämtas från REST api
+    public void createItem(Item item) {     //item hämtas från REST api
         entityManager.persist(item);
-        return item;
     }
 
-    public Item updateItem(Item item) {
+    public void updateItem(Item item) {
         entityManager.merge(item);
-        return item;
     }
 
     public Item findItemById(Long id) {
