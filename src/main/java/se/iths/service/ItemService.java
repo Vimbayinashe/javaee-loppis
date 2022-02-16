@@ -2,9 +2,9 @@ package se.iths.service;
 
 import se.iths.entity.Item;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Transactional  //this is a class that comms with the database
