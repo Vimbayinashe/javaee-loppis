@@ -1,5 +1,6 @@
 package se.iths.rest;
 
+import jakarta.ws.rs.core.MediaType;
 import se.iths.entity.Item;
 import se.iths.service.ItemService;
 
@@ -9,6 +10,8 @@ import jakarta.ws.rs.core.Response;
 import java.util.List;
 
 @Path("item")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class ItemRest {
 
     @Inject
