@@ -1,9 +1,10 @@
 package se.iths.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
+import java.time.LocalDate;
 
 @Entity
 public class Item {
@@ -11,10 +12,27 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotEmpty
+    @Size(min = 2)
     private String name;
     private String category;
     private int quantity;
     private double price;
+    private LocalDate dateCreated;
+
+    @PrePersist     //körs precis innan något sparas till databas
+    public void getCurrentDate() {
+        setDateCreated(LocalDate.now());
+    }
+
+    public LocalDate getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
     public Long getId() {
         return id;
@@ -55,4 +73,5 @@ public class Item {
     public void setPrice(double price) {
         this.price = price;
     }
+
 }
