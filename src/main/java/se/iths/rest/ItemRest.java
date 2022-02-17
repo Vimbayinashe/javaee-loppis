@@ -46,6 +46,11 @@ public class ItemRest {
         return Response.ok(foundItems).build();
     }
 
-    
+    @Path("{id}")
+    @DELETE
+    public Response deleteItem(@PathParam("id") Long id) {
+        itemService.deleteItem(id);
+        return Response.ok().build();
+    }
 
 }
