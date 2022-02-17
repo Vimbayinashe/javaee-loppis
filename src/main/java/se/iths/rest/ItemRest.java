@@ -34,14 +34,18 @@ public class ItemRest {
 
     @Path("{id}")
     @GET
-    public Item getItem(@PathParam("id") Long id) {
-        return itemService.findItemById(id);
+    public Response getItem(@PathParam("id") Long id) {
+        Item foundItem = itemService.findItemById(id);
+        return Response.ok(foundItem).build();
     }
 
     @Path("getall")
     @GET
-    public List<Item> getAllItems() {
-        return itemService.getAllItems();
+    public Response getAllItems() {
+        List<Item> foundItems = itemService.getAllItems();
+        return Response.ok(foundItems).build();
     }
+
+    
 
 }

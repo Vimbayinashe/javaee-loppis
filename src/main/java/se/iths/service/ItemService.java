@@ -29,4 +29,6 @@ public class ItemService {
         return entityManager.createQuery("SELECT i FROM Item i", Item.class).getResultList();
     }
 
+
+
 }
