@@ -9,3 +9,6 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+
+#temporarily ignore Error class
+**/Error.java
