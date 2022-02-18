@@ -36,6 +36,12 @@ public class ItemRest {
     @GET
     public Response getItem(@PathParam("id") Long id) {
         Item foundItem = itemService.findItemById(id);
+        if (foundItem == null) {
+            throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
+                    .entity("Item with ID " +  id + " not found.").type(MediaType.TEXT_PLAIN_TYPE).build());
+            //preferable to send this error message as a JSON object
+            //possible solution: an error class that sends error messages (use injection as itemService?)
+        }
         return Response.ok(foundItem).build();
     }
 
@@ -51,6 +57,22 @@ public class ItemRest {
     public Response deleteItem(@PathParam("id") Long id) {
         itemService.deleteItem(id);
         return Response.ok().build();
+    }
+
+    @Path("getallbycategory")
+    @GET
+    public Response getAllItemsByCategory(@QueryParam("category") String category) {
+        //Här finns logik som filtrerar ut alla items efter vald kategori
+
+        String responseString = "Here is a list with all the items in category: " + category;
+        return Response.ok(responseString).type(MediaType.TEXT_PLAIN_TYPE).build();
+    }
+
+    @Path("updatename/{id}")
+    @PATCH
+    public Response updateName(@PathParam("id") Long id, @QueryParam("name") String name) {
+        Item updatedItem = itemService.updateName(id, name);
+        return Response.ok(updatedItem).build();
     }
 
 }
