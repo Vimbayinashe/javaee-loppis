@@ -9,7 +9,9 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 
-@Path("item")
+// example.org/api/v1/users/234/items/123
+
+@Path("items")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ItemRest {
@@ -17,7 +19,7 @@ public class ItemRest {
     @Inject
     ItemService itemService;
 
-    @Path("new")
+    @Path("")
     @POST
     public Response createItem(Item item) {
         //layered architecture -> creating a service class that handles one stage vs handling everything in this method
@@ -25,7 +27,7 @@ public class ItemRest {
         return Response.ok(item).build();
     }
 
-    @Path("update")
+    @Path("")
     @PUT
     public Response updateItem(Item item) {
         itemService.updateItem(item);
@@ -45,7 +47,7 @@ public class ItemRest {
         return Response.ok(foundItem).build();
     }
 
-    @Path("getall")
+    @Path("")
     @GET
     public Response getAllItems() {
         List<Item> foundItems = itemService.getAllItems();
@@ -68,7 +70,7 @@ public class ItemRest {
         return Response.ok(responseString).type(MediaType.TEXT_PLAIN_TYPE).build();
     }
 
-    @Path("updatename/{id}")
+    @Path("{id}")
     @PATCH
     public Response updateName(@PathParam("id") Long id, @QueryParam("name") String name) {
         Item updatedItem = itemService.updateName(id, name);
