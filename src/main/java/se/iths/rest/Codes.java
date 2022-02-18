@@ -1,6 +1,8 @@
 package se.iths.rest;
 
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import se.iths.entity.Item;
@@ -14,7 +16,7 @@ import java.util.Date;
 @Produces(MediaType.APPLICATION_JSON)
 public class Codes {
 
-    @Path("")
+    @Path("test2")
     @GET
     public Response generateCodes(Item item) {
         return Response.status(Response.Status.PARTIAL_CONTENT)
@@ -38,7 +40,7 @@ public class Codes {
         // applies for PATCH, POST & DELETE also
     }
 
-    @Path("")
+    @Path("test3")
     @POST
     public Response getItem(Long id) {
         // Alt 1
@@ -53,6 +55,41 @@ public class Codes {
         // maybe a class that throws these errors with error message for us (Exceptions Wrapper implementation & Exceptions example)
 
         //throw new IAmATeapotException();
-        throw new NotFoundException();
+        throw new NotFoundException();          // Exception is handled by its Mapper using @Provided annotation
     }
+
+    @Path("{id}")
+    @GET
+    public Response generateCodes(@PathParam("id") int id) {
+        // String id parameter -> accepts both strings & int
+       return Response.ok(id).build();
+    }
+
+//    @Path("{id}")
+//    @GET
+//    public Response generateCodes(@PathParam("id") int id, @QueryParam("orderBy") String orderBy,
+//                                  @QueryParam("limit") String limit) {
+//       return Response.ok("ID: " + id + ", orderBy " + orderBy + ", limit " + limit).build();
+//    }
+
+    @Path("")
+    @GET
+    public Response generateCodes( @QueryParam("orderBy") String orderBy, @QueryParam("limit") String limit) {
+        return Response.ok( ", orderBy " + orderBy + ", limit " + limit).build();
+    }
+
+    @Path("")
+    @POST
+//    @Produces(MediaType.TEXT_PLAIN)     //override class's defaults
+//    @Consumes(MediaType.TEXT_PLAIN)
+    public Response addNew(Item item, @Context HttpHeaders headers) {
+        // data is sent as a JSON object that is converted to an Item object
+        // an EntityProvider (@Provider) can be used to map JSON to the desired POJO
+
+        return Response.ok(headers.getHeaderString("X-Myheader")).build();
+    }
+
+    // @HeaderParam("Header-Name") e.g. @HeaderParam("X-Myheader") String myHeader
+    // @CookieParam()
+    // @Context HttpHeaders headers -> get all headers
 }
