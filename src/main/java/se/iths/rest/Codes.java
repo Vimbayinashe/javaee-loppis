@@ -1,14 +1,11 @@
 package se.iths.rest;
 
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import se.iths.entity.Item;
+import se.iths.exceptions.IAmATeapotException;
 
-import java.net.URI;
 import java.time.Instant;
 import java.util.Date;
 
@@ -29,11 +26,33 @@ public class Codes {
     // converted into an absolute URI by resolving it relative to the base URI
     }
 
-    @Path("test")
+    @Path("test1")
     @GET
     public Item getItem(Item item) {
+        // Alt 1
+        // return Response.ok(new Item()).build();  // allows a more customised response
+
+        // Alt 2
         return  new Item();
         // returns an automatic JSON object of the Item, with default response status codes e.g. 200
         // applies for PATCH, POST & DELETE also
+    }
+
+    @Path("")
+    @POST
+    public Response getItem(Long id) {
+        // Alt 1
+        // return Response.status(Response.Status.NOT_FOUND).build();
+
+        // Alt 2
+//        throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
+//                .entity("Item with ID " +  id + " not found.").type(MediaType.TEXT_PLAIN_TYPE).build());
+
+        // Alt 3
+        // advisable: create own Exception class that extends WebApplicationException
+        // maybe a class that throws these errors with error message for us (Exceptions Wrapper implementation & Exceptions example)
+
+        //throw new IAmATeapotException();
+        throw new NotFoundException();
     }
 }
