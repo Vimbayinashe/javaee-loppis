@@ -7,7 +7,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import java.util.List;
 
-@Transactional  //this is a class that communicates with the database
+@Transactional      // replaces em.getTransaction().begin() & em.getTransaction().commit  //this is a class that communicates with the database
 public class ItemService {
 
     @PersistenceContext
@@ -37,7 +37,8 @@ public class ItemService {
     public Item updateName(Long id, String name) {
         Item foundItem = entityManager.find(Item.class, id);
         foundItem.setName(name);
-        return entityManager.merge(foundItem);
+        // return entityManager.merge(foundItem);    //merge is not necessary
+        return foundItem;
     }
 
 }
