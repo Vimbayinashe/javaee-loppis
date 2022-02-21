@@ -83,13 +83,29 @@ public class Codes {
 //    @Produces(MediaType.TEXT_PLAIN)     //override class's defaults
 //    @Consumes(MediaType.TEXT_PLAIN)
     public Response addNew(Item item, @Context HttpHeaders headers) {
-        // data is sent as a JSON object that is converted to an Item object
+        // data is sent as a JSON object that is converted to an Item object/ItemDto (Item Data Transfer Object)
         // an EntityProvider (@Provider) can be used to map JSON to the desired POJO
 
-        return Response.ok(headers.getHeaderString("X-Myheader")).build();
+        // return Response.ok(headers.getHeaderString("X-Myheader")).build();
+        return Response.ok(item).build();
     }
 
     // @HeaderParam("Header-Name") e.g. @HeaderParam("X-Myheader") String myHeader
     // @CookieParam()
     // @Context HttpHeaders headers -> get all headers
+
+    @Path("{id}")
+    @PATCH
+    public Response update(@PathParam("id") int id, Item item) {
+        //hämta befintligt Item med angivet id från itemService
+        Item oldItem = new Item();
+        oldItem.setName("Kalle");
+        oldItem.setCategory("cars");
+
+//        if(!item.getName().isEmpty()) {
+            oldItem.setName(item.getName());
+        return Response.ok(oldItem).build();
+    }
+
+    // PATCH requires some properties of an object vs PUT requires the complete replacement object
 }
