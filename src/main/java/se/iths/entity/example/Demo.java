@@ -1,4 +1,4 @@
-package se.iths.entity;
+package se.iths.entity.example;
 
 public class Demo {
 

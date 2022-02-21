@@ -1,4 +1,4 @@
-package se.iths.rest;
+package se.iths.rest.example;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
